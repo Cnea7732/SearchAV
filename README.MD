@@ -18,6 +18,16 @@ A modern video search aggregation service built with Go backend and SvelteKit fr
 - **Responsive Design** - Works on desktop and mobile devices
 - **Source Switching** - Switch between different video sources for the same content
 
+## Screenshots
+
+| Home | Search Results |
+|:---:|:---:|
+| ![Home](images/Snipaste_en_1.png) | ![Search](images/Snipaste_en_2.png) |
+
+| Player | Episodes |
+|:---:|:---:|
+| ![Player](images/Snipaste_en_3.png) | ![Episodes](images/Snipaste_en_4.png) |
+
 ## Tech Stack
 
 **Backend:**
