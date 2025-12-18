@@ -1,4 +1,6 @@
 <script lang="ts">
+	import * as m from '$lib/paraglide/messages.js';
+
 	interface Props {
 		episodes: string[];
 		currentIndex: number;
@@ -16,7 +18,7 @@
 
 <div class="episode-list">
 	<div class="flex items-center justify-between mb-4">
-		<h3 class="text-base font-medium text-white">Episodes</h3>
+		<h3 class="text-base font-medium text-white">{m.episodes()}</h3>
 		<span class="text-sm text-gray-500">{currentIndex + 1} / {episodes.length}</span>
 	</div>
 	<div class="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-2">

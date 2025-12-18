@@ -135,7 +135,7 @@
 	}
 
 	function handleBack() {
-		goto('/');
+		history.back();
 	}
 
 	function toggleEpisodes() {
@@ -165,6 +165,19 @@
 
 <!-- Top right controls (fixed position across all pages) -->
 <div class="fixed top-4 right-4 z-20 flex items-center gap-2">
+	<!-- Episodes button -->
+	{#if !loading && episodes.length > 1}
+		<button
+			type="button"
+			onclick={toggleEpisodes}
+			class="flex items-center gap-1 px-2 py-1 text-sm text-gray-400 hover:text-white bg-cyber-surface border border-cyber-border rounded transition-colors"
+		>
+			<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"></path>
+			</svg>
+			<span class="hidden sm:inline">{m.episodes()}</span>
+		</button>
+	{/if}
 	<!-- Source selector -->
 	{#if sourceCode}
 		<div class="relative">
@@ -216,7 +229,7 @@
 
 <div class="min-h-screen bg-cyber-bg flex flex-col">
 	<!-- Header -->
-	<header class="flex items-center justify-between px-4 py-3 pr-28 border-b border-cyber-border">
+	<header class="flex items-center justify-between px-4 py-3 pr-44 border-b border-cyber-border">
 		<div class="flex items-center gap-4">
 			<button
 				type="button"
@@ -242,25 +255,6 @@
 			</h1>
 		</div>
 
-		<div class="flex items-center gap-2">
-			{#if !loading && episodes.length > 1}
-				<button
-					type="button"
-					onclick={toggleEpisodes}
-					class="flex items-center gap-1 px-3 py-1.5 text-sm text-gray-400 hover:text-white bg-cyber-surface border border-cyber-border rounded transition-colors"
-				>
-					<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M4 6h16M4 12h16M4 18h7"
-						></path>
-					</svg>
-					<span>{m.episodes()}</span>
-				</button>
-			{/if}
-		</div>
 	</header>
 
 	<!-- Main content -->
