@@ -1,7 +1,10 @@
 package config
 
 import (
+	"encoding/base64"
 	"fmt"
+	"os"
+	"strings"
 	"time"
 
 	"github.com/spf13/viper"
@@ -54,19 +57,32 @@ type SourceItem struct {
 	Adult   bool   `mapstructure:"adult"`
 }
 
-// New loads configuration from file
+// New loads configuration from file or environment variable
 func New() (*Config, error) {
-	viper.SetConfigName("config")
 	viper.SetConfigType("yaml")
-	viper.AddConfigPath("./configs")
 
-	if err := viper.ReadInConfig(); err != nil {
-		return nil, err
+	// Check for CONFIG_LOCAL environment variable (base64 encoded, for Fly.io Secrets)
+	if configBase64 := os.Getenv("CONFIG_LOCAL"); configBase64 != "" {
+		decoded, err := base64.StdEncoding.DecodeString(configBase64)
+		if err != nil {
+			return nil, fmt.Errorf("failed to decode CONFIG_LOCAL: %w", err)
+		}
+		if err := viper.ReadConfig(strings.NewReader(string(decoded))); err != nil {
+			return nil, fmt.Errorf("failed to parse CONFIG_LOCAL: %w", err)
+		}
+	} else {
+		// Load from files
+		viper.SetConfigName("config")
+		viper.AddConfigPath("./configs")
+
+		if err := viper.ReadInConfig(); err != nil {
+			return nil, err
+		}
+
+		// Merge local config if exists (for sensitive data like sources)
+		viper.SetConfigName("config.local")
+		_ = viper.MergeInConfig() // Ignore error if not exists
 	}
-
-	// Merge local config if exists (for sensitive data like sources)
-	viper.SetConfigName("config.local")
-	_ = viper.MergeInConfig() // Ignore error if not exists
 
 	var cfg Config
 	if err := viper.Unmarshal(&cfg); err != nil {
