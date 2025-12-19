@@ -20,17 +20,18 @@
 
 ## 截图预览
 
-| 首页 | 搜索结果 |
-|:---:|:---:|
+|               首页                |              搜索结果               |
+|:-------------------------------:|:-------------------------------:|
 | ![首页](images/Snipaste_zh_1.png) | ![搜索](images/Snipaste_zh_2.png) |
 
-| 播放器 | 选集 |
-|:---:|:---:|
+|               播放器                |               选集                |
+|:--------------------------------:|:-------------------------------:|
 | ![播放器](images/Snipaste_zh_3.png) | ![选集](images/Snipaste_zh_4.png) |
 
 ## 技术栈
 
 **后端：**
+
 - Go 1.21+
 - Fiber (Web 框架)
 - Uber-FX (依赖注入)
@@ -39,6 +40,7 @@
 - Swagger (API 文档)
 
 **前端：**
+
 - SvelteKit 2.0
 - TypeScript
 - Tailwind CSS
@@ -89,22 +91,29 @@ pnpm build
 auth:
   enabled: true
   passwords:
-    - "你的密码"
+    - password: "普通用户密码"
+      adult: false
+    - password: "VIP用户密码"
+      adult: true  # 可访问成人源
 
 sources:
   - name: "源名称"
     code: "source_code"
     url: "https://api.example.com/api.php/provide/vod/"
     adult: false
+  - name: "成人源"
+    code: "adult_source"
+    url: "https://api.example.com/api.php/provide/vod/"
+    adult: true  # 仅限 adult: true 的密码访问
 ```
 
 ## API 接口
 
-| 接口 | 方法 | 说明 |
-|------|------|------|
-| `/api/search` | GET | 搜索视频 (`?q=关键词&adult=0\|1`) |
+| 接口            | 方法  | 说明                            |
+|---------------|-----|-------------------------------|
+| `/api/search` | GET | 搜索视频 (`?q=关键词&adult=0\|1`)    |
 | `/api/detail` | GET | 获取视频详情 (`?source=xxx&id=xxx`) |
-| `/swagger/*` | GET | API 文档 |
+| `/swagger/*`  | GET | API 文档                        |
 
 ## 项目结构
 

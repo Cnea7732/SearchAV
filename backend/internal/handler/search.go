@@ -34,10 +34,20 @@ func (h *SearchHandler) Search(ctx *Context) error {
 		return ctx.BadRequest("missing search keyword")
 	}
 
-	// Parse adult filter parameter (default: false)
-	includeAdult := ctx.Query("adult") == "1"
+	// Check if user has adult permission from auth middleware
+	hasAdultPerm := GetAdultPerm(ctx.Ctx)
 
-	ctx.Logger.Info().Str("keyword", keyword).Bool("adult", includeAdult).Msg("search request received")
+	// Parse adult filter parameter (default: false)
+	// Only allow adult content if user has permission AND requests it
+	wantAdult := ctx.Query("adult") == "1"
+	includeAdult := hasAdultPerm && wantAdult
+
+	ctx.Logger.Info().
+		Str("keyword", keyword).
+		Bool("hasAdultPerm", hasAdultPerm).
+		Bool("wantAdult", wantAdult).
+		Bool("includeAdult", includeAdult).
+		Msg("search request received")
 
 	list, err := h.service.Search(ctx.Context(), keyword, includeAdult)
 	if err != nil {

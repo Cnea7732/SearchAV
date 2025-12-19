@@ -16,8 +16,19 @@ type Config struct {
 }
 
 type AuthConfig struct {
-	Enabled   bool     `mapstructure:"enabled"`
-	Passwords []string `mapstructure:"passwords"`
+	Enabled   bool           `mapstructure:"enabled"`
+	Passwords []PasswordItem `mapstructure:"passwords"`
+}
+
+type PasswordItem struct {
+	Password string `mapstructure:"password"`
+	Adult    bool   `mapstructure:"adult"`
+}
+
+// AuthResult contains the result of password validation
+type AuthResult struct {
+	Valid bool
+	Adult bool
 }
 
 type ServerConfig struct {
@@ -104,15 +115,16 @@ func (c *Config) GetSourceByCode(code string) (*SourceItem, bool) {
 	return nil, false
 }
 
-// ValidatePassword checks if the password is in the whitelist
-func (c *Config) ValidatePassword(password string) bool {
+// ValidatePassword checks if the password is in the whitelist and returns auth result
+func (c *Config) ValidatePassword(password string) AuthResult {
+	// If auth is disabled, allow everything including adult
 	if !c.Auth.Enabled {
-		return true
+		return AuthResult{Valid: true, Adult: true}
 	}
 	for _, p := range c.Auth.Passwords {
-		if p == password {
-			return true
+		if p.Password == password {
+			return AuthResult{Valid: true, Adult: p.Adult}
 		}
 	}
-	return false
+	return AuthResult{Valid: false, Adult: false}
 }

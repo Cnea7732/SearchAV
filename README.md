@@ -20,17 +20,18 @@ A modern video search aggregation service built with Go backend and SvelteKit fr
 
 ## Screenshots
 
-| Home | Search Results |
-|:---:|:---:|
+|               Home                |           Search Results            |
+|:---------------------------------:|:-----------------------------------:|
 | ![Home](images/Snipaste_en_1.png) | ![Search](images/Snipaste_en_2.png) |
 
-| Player | Episodes |
-|:---:|:---:|
+|               Player                |               Episodes                |
+|:-----------------------------------:|:-------------------------------------:|
 | ![Player](images/Snipaste_en_3.png) | ![Episodes](images/Snipaste_en_4.png) |
 
 ## Tech Stack
 
 **Backend:**
+
 - Go 1.21+
 - Fiber (Web Framework)
 - Uber-FX (Dependency Injection)
@@ -39,6 +40,7 @@ A modern video search aggregation service built with Go backend and SvelteKit fr
 - Swagger (API Documentation)
 
 **Frontend:**
+
 - SvelteKit 2.0
 - TypeScript
 - Tailwind CSS
@@ -89,22 +91,29 @@ Create `configs/config.local.yaml` (gitignored) for sensitive configuration:
 auth:
   enabled: true
   passwords:
-    - "your-password-here"
+    - password: "normal-user-pass"
+      adult: false
+    - password: "vip-user-pass"
+      adult: true  # Can access adult sources
 
 sources:
   - name: "Source Name"
     code: "source_code"
     url: "https://api.example.com/api.php/provide/vod/"
     adult: false
+  - name: "Adult Source"
+    code: "adult_source"
+    url: "https://api.example.com/api.php/provide/vod/"
+    adult: true  # Only accessible with adult-enabled password
 ```
 
 ## API Endpoints
 
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/search` | GET | Search videos (`?q=keyword&adult=0\|1`) |
-| `/api/detail` | GET | Get video details (`?source=xxx&id=xxx`) |
-| `/swagger/*` | GET | API documentation |
+| Endpoint      | Method | Description                              |
+|---------------|--------|------------------------------------------|
+| `/api/search` | GET    | Search videos (`?q=keyword&adult=0\|1`)  |
+| `/api/detail` | GET    | Get video details (`?source=xxx&id=xxx`) |
+| `/swagger/*`  | GET    | API documentation                        |
 
 ## Project Structure
 
@@ -138,27 +147,33 @@ SearchAV/
 
 ### Service Nature
 
-SearchAV only provides video search services. It does not directly provide, store, or upload any video content. All search results come from third-party public APIs.
+SearchAV only provides video search services. It does not directly provide, store, or upload any video content. All
+search results come from third-party public APIs.
 
 ### User Responsibility
 
-When using this service, users must comply with relevant laws and regulations. Users shall not use search results for infringing activities, such as downloading or distributing unauthorized works.
+When using this service, users must comply with relevant laws and regulations. Users shall not use search results for
+infringing activities, such as downloading or distributing unauthorized works.
 
 ### Advertisement Warning
 
-All videos come from third-party collection sites. Advertisements appearing in videos are not affiliated with this site. Do not trust or click any ads in videos to avoid fraud.
+All videos come from third-party collection sites. Advertisements appearing in videos are not affiliated with this site.
+Do not trust or click any ads in videos to avoid fraud.
 
 ### Security Recommendations
 
-It is strongly recommended to set up password protection during deployment to avoid legal risks from public access. Do not publicly share or distribute instance links.
+It is strongly recommended to set up password protection during deployment to avoid legal risks from public access. Do
+not publicly share or distribute instance links.
 
 ### Legal Liability
 
-The developers of this project are not responsible for any consequences arising from the use of this project. When using this project, you must comply with local laws and regulations.
+The developers of this project are not responsible for any consequences arising from the use of this project. When using
+this project, you must comply with local laws and regulations.
 
 ### Usage Scope
 
-This project is for learning and personal use only. Do not use deployed instances for commercial purposes or public services. Users are solely responsible for any legal issues arising from public sharing.
+This project is for learning and personal use only. Do not use deployed instances for commercial purposes or public
+services. Users are solely responsible for any legal issues arising from public sharing.
 
 ---
 
