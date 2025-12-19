@@ -1,16 +1,24 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import * as m from '$lib/paraglide/messages.js';
+	import { hasPassword, clearPassword } from '$lib/api/client';
 	import SearchBar from '$lib/components/SearchBar.svelte';
 	import LanguageSwitcher from '$lib/components/LanguageSwitcher.svelte';
 	import AdultToggle from '$lib/components/AdultToggle.svelte';
 	import Footer from '$lib/components/Footer.svelte';
 
 	let query = $state('');
+	let showLogout = $state(hasPassword());
 
 	function handleSearch(q: string) {
 		if (!q.trim()) return;
 		goto(`/search?wd=${encodeURIComponent(q.trim())}`);
+	}
+
+	function handleLogout() {
+		clearPassword();
+		showLogout = false;
+		location.reload();
 	}
 </script>
 
@@ -20,7 +28,19 @@
 
 <!-- Top right controls (fixed position across all pages) -->
 <div class="fixed top-4 right-4 z-20 flex items-center gap-2">
-	<AdultToggle />
+	{#if showLogout}
+		<AdultToggle />
+		<button
+			type="button"
+			onclick={handleLogout}
+			class="p-2 rounded-lg bg-gray-800/80 hover:bg-gray-700 transition-colors"
+			title={m.logout()}
+		>
+			<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+			</svg>
+		</button>
+	{/if}
 	<LanguageSwitcher />
 </div>
 

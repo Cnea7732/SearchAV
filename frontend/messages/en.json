@@ -31,5 +31,6 @@
   "detail_failed": "Failed to get detail",
   "unauthorized": "Unauthorized",
   "disclaimer_line1": "SearchAV only provides video search services. We do not host, store, or upload any video content. All search results come from third-party public APIs.",
-  "disclaimer_line2": "All videos are sourced from third-party sites. Ads appearing in videos are not affiliated with this site. Do not trust or click any ads in videos."
+  "disclaimer_line2": "All videos are sourced from third-party sites. Ads appearing in videos are not affiliated with this site. Do not trust or click any ads in videos.",
+  "logout": "Logout"
 }

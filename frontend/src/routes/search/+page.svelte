@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { search, AuthError, type VideoResult } from '$lib';
+	import { search, AuthError, type VideoResult, hasPassword, clearPassword } from '$lib';
 	import * as m from '$lib/paraglide/messages.js';
 	import SearchBar from '$lib/components/SearchBar.svelte';
 	import ResultGrid from '$lib/components/ResultGrid.svelte';
@@ -15,6 +15,7 @@
 	let searchError = $state<string | null>(null);
 	let showPasswordModal = $state(false);
 	let currentQuery = $state('');
+	let showLogout = $state(hasPassword());
 
 	// Get query from URL
 	let query = $derived($page.url.searchParams.get('wd') || '');
@@ -60,6 +61,7 @@
 
 	function handlePasswordSubmit() {
 		showPasswordModal = false;
+		showLogout = hasPassword();
 		if (query) {
 			performSearch(query);
 		}
@@ -85,6 +87,12 @@
 	function goHome() {
 		goto('/');
 	}
+
+	function handleLogout() {
+		clearPassword();
+		showLogout = false;
+		location.reload();
+	}
 </script>
 
 <svelte:head>
@@ -95,7 +103,19 @@
 
 <!-- Top right controls (fixed position across all pages) -->
 <div class="fixed top-4 right-4 z-20 flex items-center gap-2">
-	<AdultToggle />
+	{#if showLogout}
+		<AdultToggle />
+		<button
+			type="button"
+			onclick={handleLogout}
+			class="p-2 rounded-lg bg-gray-800/80 hover:bg-gray-700 transition-colors"
+			title={m.logout()}
+		>
+			<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+			</svg>
+		</button>
+	{/if}
 	<LanguageSwitcher />
 </div>
 

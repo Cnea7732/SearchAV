@@ -8,7 +8,6 @@
 	import EpisodeList from '$lib/components/EpisodeList.svelte';
 	import PasswordModal from '$lib/components/PasswordModal.svelte';
 	import LanguageSwitcher from '$lib/components/LanguageSwitcher.svelte';
-	import AdultToggle from '$lib/components/AdultToggle.svelte';
 
 	let sourceCode = $state('');
 	let vodId = $state(0);
@@ -251,7 +250,6 @@
 				</div>
 			{/if}
 
-			<AdultToggle />
 			<LanguageSwitcher />
 		</div>
 	</header>
