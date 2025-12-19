@@ -1,8 +1,8 @@
 import type { VideoResult, VideoDetail, SearchResponse, DetailResponse } from '$lib/types';
 import { browser } from '$app/environment';
-import { PUBLIC_API_BASE } from '$env/static/public';
+import { PUBLIC_API_HOST } from '$env/static/public';
 
-const API_BASE = PUBLIC_API_BASE || '/api';
+const API_BASE = PUBLIC_API_HOST ? `${PUBLIC_API_HOST}/api` : '/api';
 const AUTH_HEADER = 'X-Auth-Password';
 const STORAGE_KEY = 'searchav_auth_password';
 const ADULT_MODE_KEY = 'searchav_adult_mode';
