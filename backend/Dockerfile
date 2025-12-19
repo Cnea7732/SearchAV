@@ -37,6 +37,6 @@ RUN chmod +x ./app_binary
 # Switch to the non-root user
 USER appuser
 
-EXPOSE 7777
+EXPOSE 9898
 
 CMD ["./app_binary"]
