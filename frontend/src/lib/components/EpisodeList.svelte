@@ -53,7 +53,8 @@
 	<!-- Episodes grid (scrollable) -->
 	<div
 		bind:this={gridContainer}
-		class="flex-1 overflow-y-auto overflow-x-hidden pr-1 min-h-0"
+		class="flex-1 overflow-y-auto overflow-x-hidden pr-1 min-h-0 overscroll-contain touch-pan-y"
+		style="-webkit-overflow-scrolling: touch;"
 	>
 		<div class="grid grid-cols-5 gap-1.5">
 			{#each episodes as _, index}

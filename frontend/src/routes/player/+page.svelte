@@ -344,23 +344,41 @@
 
 <!-- Mobile episode panel (bottom sheet) -->
 {#if !loading && episodes.length > 1 && showEpisodes}
-	<div class="lg:hidden fixed inset-0 z-30">
-		<!-- Backdrop -->
-		<button
-			type="button"
-			class="absolute inset-0 bg-black/60 backdrop-blur-sm"
-			onclick={() => (showEpisodes = false)}
-			aria-label="Close"
-		></button>
-		<!-- Panel -->
-		<div class="absolute bottom-0 left-0 right-0 bg-cyber-bg border-t border-cyber-border rounded-t-2xl max-h-[70vh] flex flex-col animate-slide-up">
-			<!-- Handle -->
-			<div class="flex justify-center py-2 shrink-0">
-				<div class="w-10 h-1 bg-gray-600 rounded-full"></div>
-			</div>
-			<!-- Content -->
-			<div class="px-4 pb-4 flex-1 min-h-0 flex flex-col overflow-hidden">
-				<EpisodeList {episodes} {currentIndex} onselect={handleEpisodeSelect} />
+	<!-- Backdrop (separate layer) -->
+	<button
+		type="button"
+		class="lg:hidden fixed inset-0 z-[9998] bg-black/60 backdrop-blur-sm"
+		onclick={() => (showEpisodes = false)}
+		aria-label="Close"
+	></button>
+	<!-- Panel (higher z-index) -->
+	<div class="lg:hidden fixed bottom-0 left-0 right-0 z-[9999] bg-cyber-bg border-t border-cyber-border rounded-t-2xl max-h-[70vh] animate-slide-up">
+		<!-- Handle -->
+		<div class="flex justify-center py-2">
+			<div class="w-10 h-1 bg-gray-600 rounded-full"></div>
+		</div>
+		<!-- Header -->
+		<div class="flex items-center justify-between px-4 pb-2">
+			<h3 class="text-base font-medium text-white">{m.episodes()}</h3>
+			<span class="text-sm text-gray-500">{currentIndex + 1} / {episodes.length}</span>
+		</div>
+		<!-- Scrollable grid -->
+		<div
+			class="px-4 pb-6 overflow-y-auto"
+			style="max-height: calc(70vh - 80px); -webkit-overflow-scrolling: touch;"
+		>
+			<div class="grid grid-cols-5 gap-2">
+				{#each episodes as _, index}
+					<button
+						type="button"
+						onclick={() => handleEpisodeSelect(index)}
+						class="aspect-square flex items-center justify-center rounded-lg text-sm font-medium transition-colors {index === currentIndex
+							? 'bg-cyber-blue text-black shadow-lg shadow-cyber-blue/40'
+							: 'bg-white/5 border border-white/10 text-gray-400 hover:bg-white/10 hover:text-white'}"
+					>
+						{index + 1}
+					</button>
+				{/each}
 			</div>
 		</div>
 	</div>
