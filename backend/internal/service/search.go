@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"sort"
 	"strings"
 	"sync"
 
@@ -92,6 +93,10 @@ func (s *SearchService) Search(ctx context.Context, keyword string, includeAdult
 	merged := s.mergeResults(allResults)
 	s.logger.Info().Int("merged", len(merged)).Msg("merge complete")
 
+	// Sort by relevance
+	s.sortByRelevance(merged, keyword)
+	s.logger.Info().Msg("sort complete")
+
 	return merged, nil
 }
 
@@ -134,4 +139,59 @@ func (s *SearchService) mergeResults(raw []source.RawVideo) []model.VideoItem {
 		result = append(result, *v)
 	}
 	return result
+}
+
+// sortByRelevance sorts results by match relevance to keyword
+// Priority: exact match > prefix match > contains match
+// Secondary: more sources > fewer sources
+// Tertiary: shorter name > longer name
+func (s *SearchService) sortByRelevance(items []model.VideoItem, keyword string) {
+	keywordLower := strings.ToLower(strings.TrimSpace(keyword))
+
+	sort.Slice(items, func(i, j int) bool {
+		scoreI := s.calculateRelevanceScore(items[i].VodName, keywordLower)
+		scoreJ := s.calculateRelevanceScore(items[j].VodName, keywordLower)
+
+		if scoreI != scoreJ {
+			return scoreI > scoreJ // Higher score first
+		}
+
+		// Same relevance, prefer more sources
+		if len(items[i].Sources) != len(items[j].Sources) {
+			return len(items[i].Sources) > len(items[j].Sources)
+		}
+
+		// Same sources count, prefer shorter name (more precise match)
+		return len(items[i].VodName) < len(items[j].VodName)
+	})
+}
+
+// calculateRelevanceScore returns a score based on how well the name matches the keyword
+// Higher score = better match
+func (s *SearchService) calculateRelevanceScore(name, keywordLower string) int {
+	nameLower := strings.ToLower(strings.TrimSpace(name))
+
+	// Exact match (highest priority)
+	if nameLower == keywordLower {
+		return 100
+	}
+
+	// Starts with keyword
+	if strings.HasPrefix(nameLower, keywordLower) {
+		return 80
+	}
+
+	// Check if keyword appears at the beginning of a "segment"
+	if strings.Contains(nameLower, keywordLower) {
+		// Bonus if keyword is at the start after common prefixes
+		idx := strings.Index(nameLower, keywordLower)
+		if idx == 0 {
+			return 80
+		}
+		// Earlier position = higher score
+		return 60 - idx
+	}
+
+	// No match (shouldn't happen in search results, but just in case)
+	return 0
 }
